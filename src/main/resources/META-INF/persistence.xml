@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence           http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
+  <persistence-unit name="Prueba2PU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>reclutamiento.prueba2.model.Usuario</class>
+    <class>reclutamiento.prueba2.model.BitacoraPostulacion</class>
+    <class>reclutamiento.prueba2.model.Evaluacion</class>
+    <class>reclutamiento.prueba2.model.Contratacion</class>
+    <class>reclutamiento.prueba2.model.Rol</class>
+    <class>reclutamiento.prueba2.model.Vacante</class>
+    <class>reclutamiento.prueba2.model.VacanteReclutador</class>
+    <class>reclutamiento.prueba2.model.Candidato</class>
+    <class>reclutamiento.prueba2.model.Postulacion</class>
+    <class>reclutamiento.prueba2.model.Empresa</class>
+    <class>reclutamiento.prueba2.model.Factura</class>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://127.0.0.1:1483;databaseName=Reclutadora;trustServerCertificate=true"/>
+      <property name="javax.persistence.jdbc.user" value="sa"/>
+      <property name="javax.persistence.jdbc.driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
+      <property name="javax.persistence.jdbc.password" value="Mami2015"/>
+    </properties>
+  </persistence-unit>
+</persistence>
