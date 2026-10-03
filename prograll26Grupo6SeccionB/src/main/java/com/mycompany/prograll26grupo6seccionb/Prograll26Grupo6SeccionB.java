@@ -35,6 +35,12 @@ public class Prograll26Grupo6SeccionB {
         int opcion = 0;
 
         while (opcion != 7) {
+                     System.out.println("Danniel Eliezer Gómez Soto 6691-22-3902");
+                     System.out.println("Luis eduardo Vasquez Garcia 6691-25-20380");
+            
+          
+            
+          
 
             System.out.println("\n=== Menú de Reclutadora ===");
             System.out.println("1. Gestionar Empresas");
