@@ -4,10 +4,35 @@
  */
 package paquete.bd.reclutadora;
 
-/**
- *
- * @author DELL
- */
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+
 public class EvaluacionesJpaController {
-    
+
+    private EntityManagerFactory emf;
+
+    public EvaluacionesJpaController(EntityManagerFactory emf) {
+        this.emf = emf;
+    }
+
+    public EntityManager getEntityManager() {
+        return emf.createEntityManager();
+    }
+
+    public List<Evaluaciones> findEvaluacionesEntities() {
+
+        EntityManager em = getEntityManager();
+
+        try {
+            return em.createQuery(
+                    "SELECT e FROM Evaluaciones e",
+                    Evaluaciones.class
+            ).getResultList();
+
+        } finally {
+            em.close();
+        }
+    }
 }
+

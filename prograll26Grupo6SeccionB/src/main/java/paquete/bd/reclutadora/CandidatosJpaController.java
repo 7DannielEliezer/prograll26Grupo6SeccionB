@@ -1,15 +1,33 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package paquete.bd.reclutadora;
 
-import java.io.Serializable;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 
-/**
- *
- * @author DELL
- */
-public class CandidatosJpaController implements Serializable {
-    
+public class CandidatosJpaController {
+
+    private EntityManagerFactory emf;
+
+    public CandidatosJpaController(EntityManagerFactory emf) {
+        this.emf = emf;
+    }
+
+    public EntityManager getEntityManager() {
+        return emf.createEntityManager();
+    }
+
+    public List<Candidatos> findCandidatosEntities() {
+
+        EntityManager em = getEntityManager();
+
+        try {
+            return em.createQuery(
+                    "SELECT c FROM Candidatos c",
+                    Candidatos.class
+            ).getResultList();
+
+        } finally {
+            em.close();
+        }
+    }
 }

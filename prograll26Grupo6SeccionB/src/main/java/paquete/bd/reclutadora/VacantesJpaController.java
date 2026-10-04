@@ -4,10 +4,34 @@
  */
 package paquete.bd.reclutadora;
 
-/**
- *
- * @author DELL
- */
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+
 public class VacantesJpaController {
-    
+
+    private EntityManagerFactory emf;
+
+    public VacantesJpaController(EntityManagerFactory emf) {
+        this.emf = emf;
+    }
+
+    public EntityManager getEntityManager() {
+        return emf.createEntityManager();
+    }
+
+    public List<Vacantes> findVacantesEntities() {
+
+        EntityManager em = getEntityManager();
+
+        try {
+            return em.createQuery(
+                    "SELECT v FROM Vacantes v",
+                    Vacantes.class
+            ).getResultList();
+
+        } finally {
+            em.close();
+        }
+    }
 }
