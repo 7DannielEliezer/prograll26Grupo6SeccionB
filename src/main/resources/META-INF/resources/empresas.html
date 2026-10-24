@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Empresas</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        th { background-color: #f4f4f4; }
+        .form-container { background: #f9f9f9; padding: 15px; border: 1px solid #ddd; margin-bottom: 20px; width: 400px; }
+        .form-container input { display: block; width: 95%; margin-bottom: 10px; padding: 6px; }
+        button { padding: 8px 12px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <h2>Gestión de Empresas</h2>
+
+    <!-- Formulario para Crear / Actualizar -->
+    <div class="form-container">
+        <h3 id="form-title">Agregar Empresa</h3>
+        <input type="hidden" id="idEmpresa">
+        
+        <label>Nombre de la Empresa:</label>
+        <input type="text" id="nombreEmpresa" required>
+        
+        <label>NIT:</label>
+        <input type="text" id="nit">
+        
+        <label>Teléfono:</label>
+        <input type="text" id="telefono">
+        
+        <label>Correo:</label>
+        <input type="email" id="correo">
+        
+        <label>Dirección:</label>
+        <input type="text" id="direccion">
+
+        <button type="button" onclick="guardarEmpresa()">Guardar</button>
+        <button type="button" onclick="limpiarFormulario()">Cancelar</button>
+    </div>
+
+    <!-- Tabla de Registros -->
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>NIT</th>
+                <th>Teléfono</th>
+                <th>Correo</th>
+                <th>Dirección</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody id="tabla-empresas">
+            <!-- Se llena dinámicamente -->
+        </tbody>
+    </table>
+
+    <script>
+        const API_URL = '/empresas';
+
+        // 1. Cargar la lista al abrir la página (GET)
+        async function cargarEmpresas() {
+            try {
+                const res = await fetch(API_URL);
+                const empresas = await res.json();
+                const tbody = document.getElementById('tabla-empresas');
+                tbody.innerHTML = '';
+
+                empresas.forEach(e => {
+                    tbody.innerHTML += `
+                        <tr>
+                            <td>${e.idEmpresa || e.id}</td>
+                            <td>${e.nombreEmpresa || ''}</td>
+                            <td>${e.nit || ''}</td>
+                            <td>${e.telefono || ''}</td>
+                            <td>${e.correo || ''}</td>
+                            <td>${e.direccion || ''}</td>
+                            <td>
+                                <button onclick='cargarParaEditar(${JSON.stringify(e)})'>Actualizar</button>
+                            </td>
+                        </tr>
+                    `;
+                });
+            } catch (err) {
+                console.error("Error al cargar empresas:", err);
+            }
+        }
+
+        // 2. Crear o Actualizar (POST / PUT)
+        async function guardarEmpresa() {
+            const id = document.getElementById('idEmpresa').value;
+            const empresa = {
+                nombreEmpresa: document.getElementById('nombreEmpresa').value,
+                nit: document.getElementById('nit').value,
+                telefono: document.getElementById('telefono').value,
+                correo: document.getElementById('correo').value,
+                direccion: document.getElementById('direccion').value
+            };
+
+            if (id) {
+                // Actualizar (PUT)
+                await fetch(`${API_URL}/${id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(empresa)
+                });
+            } else {
+                // Crear (POST)
+                await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(empresa)
+                });
+            }
+
+            limpiarFormulario();
+            cargarEmpresas();
+        }
+
+        // 3. Cargar datos en el formulario para editar
+        function cargarParaEditar(e) {
+            document.getElementById('idEmpresa').value = e.idEmpresa || e.id;
+            document.getElementById('nombreEmpresa').value = e.nombreEmpresa || '';
+            document.getElementById('nit').value = e.nit || '';
+            document.getElementById('telefono').value = e.telefono || '';
+            document.getElementById('correo').value = e.correo || '';
+            document.getElementById('direccion').value = e.direccion || '';
+            document.getElementById('form-title').innerText = 'Actualizar Empresa';
+        }
+
+        function limpiarFormulario() {
+            document.getElementById('idEmpresa').value = '';
+            document.getElementById('nombreEmpresa').value = '';
+            document.getElementById('nit').value = '';
+            document.getElementById('telefono').value = '';
+            document.getElementById('correo').value = '';
+            document.getElementById('direccion').value = '';
+            document.getElementById('form-title').innerText = 'Agregar Empresa';
+        }
+
+        // Cargar registros al iniciar
+        cargarEmpresas();
+    </script>
+</body>
+</html>

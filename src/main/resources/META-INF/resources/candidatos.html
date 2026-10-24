@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Clientes / Candidatos</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        th { background-color: #f4f4f4; }
+        .form-container { background: #f9f9f9; padding: 15px; border: 1px solid #ddd; margin-bottom: 20px; width: 400px; }
+        .form-container input { display: block; width: 95%; margin-bottom: 10px; padding: 6px; }
+        button { padding: 8px 12px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <h2>Gestión de Candidatos</h2>
+    
+    <!-- Formulario para Crear / Actualizar -->
+    <div class="form-container">
+        <h3 id="form-title">Agregar Candidato</h3>
+        <input type="hidden" id="idCandidato">
+        
+        <label>Nombres:</label>
+        <input type="text" id="nombres" required>
+        
+        <label>Apellidos:</label>
+        <input type="text" id="apellidos" required>
+        
+        <label>DPI:</label>
+        <input type="text" id="dpi">
+        
+        <label>Correo:</label>
+        <input type="email" id="correo">
+        
+        <label>Teléfono:</label>
+        <input type="text" id="telefono">
+
+        <button type="button" onclick="guardarCandidato()">Guardar</button>
+        <button type="button" onclick="limpiarFormulario()">Cancelar</button>
+    </div>
+
+    <!-- Tabla de Registros -->
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombres</th>
+                <th>Apellidos</th>
+                <th>DPI</th>
+                <th>Correo</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody id="tabla-candidatos">
+            <!-- Se llena dinámicamente -->
+        </tbody>
+    </table>
+
+    <script>
+        const API_URL = '/candidatos';
+
+        // 1. Cargar la lista al abrir la página (GET)
+        async function cargarCandidatos() {
+            const res = await fetch(API_URL);
+            const candidatos = await res.json();
+            const tbody = document.getElementById('tabla-candidatos');
+            tbody.innerHTML = '';
+
+            candidatos.forEach(c => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${c.idCandidato}</td>
+                        <td>${c.nombres || ''}</td>
+                        <td>${c.apellidos || ''}</td>
+                        <td>${c.dpi || ''}</td>
+                        <td>${c.correo || ''}</td>
+                        <td>
+                            <button onclick='cargarParaEditar(${JSON.stringify(c)})'>Actualizar</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        // 2. Crear o Actualizar (POST / PUT)
+        async function guardarCandidato() {
+            const id = document.getElementById('idCandidato').value;
+            const candidato = {
+                nombres: document.getElementById('nombres').value,
+                apellidos: document.getElementById('apellidos').value,
+                dpi: document.getElementById('dpi').value,
+                correo: document.getElementById('correo').value,
+                telefono: document.getElementById('telefono').value
+            };
+
+            if (id) {
+                // Actualizar (PUT)
+                await fetch(`${API_URL}/${id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(candidato)
+                });
+            } else {
+                // Crear (POST)
+                await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(candidato)
+                });
+            }
+
+            limpiarFormulario();
+            cargarCandidatos();
+        }
+
+        // 3. Cargar datos en el formulario para editar
+        function cargarParaEditar(c) {
+            document.getElementById('idCandidato').value = c.idCandidato;
+            document.getElementById('nombres').value = c.nombres || '';
+            document.getElementById('apellidos').value = c.apellidos || '';
+            document.getElementById('dpi').value = c.dpi || '';
+            document.getElementById('correo').value = c.correo || '';
+            document.getElementById('telefono').value = c.telefono || '';
+            document.getElementById('form-title').innerText = 'Actualizar Candidato';
+        }
+
+        function limpiarFormulario() {
+            document.getElementById('idCandidato').value = '';
+            document.getElementById('nombres').value = '';
+            document.getElementById('apellidos').value = '';
+            document.getElementById('dpi').value = '';
+            document.getElementById('correo').value = '';
+            document.getElementById('telefono').value = '';
+            document.getElementById('form-title').innerText = 'Agregar Candidato';
+        }
+
+        // Cargar registros al iniciar
+        cargarCandidatos();
+    </script>
+</body>
+</html>
