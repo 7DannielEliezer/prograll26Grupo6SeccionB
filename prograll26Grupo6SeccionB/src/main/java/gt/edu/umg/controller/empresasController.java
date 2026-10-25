@@ -12,6 +12,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -137,6 +138,30 @@ public class empresasController {
 
         return Response.ok(new EmpresaDTO(existente)).build();
     }
+    
+    // Eliminar una empresa
+@DELETE
+@Path("/{id}")
+@Transactional
+public Response eliminarEmpresa(@PathParam("id") Integer id) {
+
+    Empresas empresa = em.find(Empresas.class, id);
+
+    if (empresa == null) {
+        return Response.status(Response.Status.NOT_FOUND)
+            .entity("{\"mensaje\":\"Empresa no encontrada\"}")
+            .build();
+    }
+
+    em.remove(empresa);
+
+    return Response.ok()
+        .entity("{\"mensaje\":\"Empresa eliminada correctamente\"}")
+        .build();
+}
+    
+    
+    
 
     // Respuesta JSON sin incluir la lista de vacantes
     public static class EmpresaDTO {

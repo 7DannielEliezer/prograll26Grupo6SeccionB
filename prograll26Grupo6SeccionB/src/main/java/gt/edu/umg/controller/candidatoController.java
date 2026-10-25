@@ -3,7 +3,6 @@ package gt.edu.umg.controller;
 
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.core.Response;
 import paquete.bd.reclutadora.Candidatos;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -89,6 +88,32 @@ public class candidatoController {
 
         return Response.ok(new CandidatoDTO(existente)).build();
     }
+    // Eliminar un candidato
+@DELETE
+@Path("/{id}")
+@Transactional
+public Response eliminarCandidato(@PathParam("id") Integer id) {
+
+    Candidatos candidato = em.find(Candidatos.class, id);
+
+    if (candidato == null) {
+        return Response.status(Response.Status.NOT_FOUND)
+            .entity("{\"mensaje\":\"Candidato no encontrado\"}")
+            .build();
+    }
+
+    em.remove(candidato);
+
+    return Response.ok()
+        .entity("{\"mensaje\":\"Candidato eliminado correctamente\"}")
+        .build();
+}
+    
+    
+    
+    
+    
+    
 
     // DTO: devuelve solo los campos que necesita la página
     public static class CandidatoDTO {

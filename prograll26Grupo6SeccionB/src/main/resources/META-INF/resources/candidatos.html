@@ -360,12 +360,26 @@
                 tabla.replaceChildren();
 
                 if (candidatos.length === 0) {
-                    const fila = document.createElement("tr");
-                    const celda = document.createElement("td");
-                    celda.colSpan = 7;
-                    celda.textContent = "No hay candidatos registrados.";
-                    fila.appendChild(celda);
-                    tabla.appendChild(fila);
+const celda = document.createElement("td");
+
+// Botón Actualizar
+const botonEditar = document.createElement("button");
+botonEditar.type = "button";
+botonEditar.textContent = "Actualizar";
+botonEditar.addEventListener("click", () => editarCandidato(c));
+
+// Botón Eliminar
+const botonEliminar = document.createElement("button");
+botonEliminar.type = "button";
+botonEliminar.textContent = "Eliminar";
+botonEliminar.style.marginLeft = "5px";
+botonEliminar.addEventListener("click", () => eliminarCandidato(c.candidatoID));
+
+celda.appendChild(botonEditar);
+celda.appendChild(botonEliminar);
+
+fila.appendChild(celda);
+tabla.appendChild(fila);
                     return;
                 }
 
@@ -478,6 +492,60 @@
         // ==================================
         // EMPRESAS: LISTAR
         // ==================================
+// ==================================
+// CANDIDATOS: ELIMINAR
+// ==================================
+
+async function eliminarCandidato(id) {
+
+    const confirmar = confirm(
+        "¿Estás seguro de que deseas eliminar este candidato?"
+    );
+
+    if (!confirmar) {
+        return;
+    }
+
+    try {
+        const respuesta = await fetch(
+            `${API_CANDIDATOS}/${id}`,
+            {
+                method: "DELETE",
+                headers: {
+                    "Accept": "application/json"
+                }
+            }
+        );
+
+        if (!respuesta.ok) {
+            throw new Error(await leerError(respuesta));
+        }
+
+        // Si se estaba editando el candidato eliminado, limpiar el formulario
+        if (document.getElementById("candidatoID").value === String(id)) {
+            cancelarCandidato();
+        }
+
+        mostrarMensaje(
+            "mensajeCandidatos",
+            "Candidato eliminado correctamente."
+        );
+
+        // Actualizar la tabla
+        await cargarCandidatos();
+
+    } catch (error) {
+        mostrarMensaje(
+            "mensajeCandidatos",
+            "No se pudo eliminar el candidato: " + error.message,
+            true
+        );
+    }
+}
+
+
+
+
 
         async function cargarEmpresas() {
             const tabla = document.getElementById("tablaEmpresas");
@@ -493,12 +561,26 @@
                 tabla.replaceChildren();
 
                 if (empresas.length === 0) {
-                    const fila = document.createElement("tr");
-                    const celda = document.createElement("td");
-                    celda.colSpan = 6;
-                    celda.textContent = "No hay empresas registradas.";
-                    fila.appendChild(celda);
-                    tabla.appendChild(fila);
+const celda = document.createElement("td");
+
+// Botón Actualizar
+const botonEditar = document.createElement("button");
+botonEditar.type = "button";
+botonEditar.textContent = "Actualizar";
+botonEditar.addEventListener("click", () => editarEmpresa(e));
+
+// Botón Eliminar
+const botonEliminar = document.createElement("button");
+botonEliminar.type = "button";
+botonEliminar.textContent = "Eliminar";
+botonEliminar.style.marginLeft = "5px";
+botonEliminar.addEventListener("click", () => eliminarEmpresa(e.empresaID));
+
+celda.appendChild(botonEditar);
+celda.appendChild(botonEliminar);
+
+fila.appendChild(celda);
+tabla.appendChild(fila);
                     return;
                 }
 
@@ -606,6 +688,60 @@
             document.getElementById("guardarEmpresa").textContent =
                 "Guardar";
         }
+// ==================================
+// EMPRESAS: ELIMINAR
+// ==================================
+
+async function eliminarEmpresa(id) {
+
+    const confirmar = confirm(
+        "¿Estás seguro de que deseas eliminar esta empresa?"
+    );
+
+    if (!confirmar) {
+        return;
+    }
+
+    try {
+        const respuesta = await fetch(
+            `${API_EMPRESAS}/${id}`,
+            {
+                method: "DELETE",
+                headers: {
+                    "Accept": "application/json"
+                }
+            }
+        );
+
+        if (!respuesta.ok) {
+            throw new Error(await leerError(respuesta));
+        }
+
+        // Si se estaba editando la empresa eliminada, limpiar el formulario
+        if (document.getElementById("empresaID").value === String(id)) {
+            cancelarEmpresa();
+        }
+
+        mostrarMensaje(
+            "mensajeEmpresas",
+            "Empresa eliminada correctamente."
+        );
+
+        // Actualizar la tabla
+        await cargarEmpresas();
+
+    } catch (error) {
+        mostrarMensaje(
+            "mensajeEmpresas",
+            "No se pudo eliminar la empresa: " + error.message,
+            true
+        );
+    }
+}
+
+
+
+
 
         // Cargar el módulo inicial
         cargarCandidatos();
