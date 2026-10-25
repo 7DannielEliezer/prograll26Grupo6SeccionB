@@ -118,8 +118,9 @@
 
 <body>
 
-    <h1>Sistema de Reclutamiento</h1>
-
+<h1 style="font-size: 36px; color: blue;">
+    Sistema de Reclutamiento
+</h1>
     <!-- Navegación entre módulos -->
     <nav class="menu">
         <button type="button" id="menuCandidatos"
@@ -138,9 +139,18 @@
     <!-- MÓDULO DE CANDIDATOS -->
     <!-- ================================== -->
     <section id="seccionCandidatos" class="seccion visible">
-
-        <h2>Gestión de Candidatos</h2>
-
+<h2 style="font-size: 30px; color: green;">
+    Gestión de Candidatos 
+</h2>
+        <h2 style="font-size: 30px; color: red;">
+    Gestión de Candidatos 
+    
+    Aguilar Luis Eduardo Vasquez García 6691-25-20380 
+    Danniel Eliezer Gómez Soto 6691-22-3902 Pedro Cristobal 
+    Gutierrez Perez 6691-24-23363
+</h2>
+        
+        
         <div class="formulario">
             <h3 id="tituloCandidato">Agregar Candidato</h3>
 
@@ -220,8 +230,9 @@
     <!-- ================================== -->
     <section id="seccionEmpresas" class="seccion">
 
-        <h2>Gestión de Empresas</h2>
-
+<h2 style="font-size: 30px; color: green;">
+    Gestión de Empresas
+</h2>
         <div class="formulario">
             <h3 id="tituloEmpresa">Agregar Empresa</h3>
 
@@ -561,6 +572,8 @@ async function eliminarCandidato(id) {
                 tabla.replaceChildren();
 
                 if (empresas.length === 0) {
+
+
 const celda = document.createElement("td");
 
 // Botón Actualizar
@@ -574,13 +587,22 @@ const botonEliminar = document.createElement("button");
 botonEliminar.type = "button";
 botonEliminar.textContent = "Eliminar";
 botonEliminar.style.marginLeft = "5px";
-botonEliminar.addEventListener("click", () => eliminarEmpresa(e.empresaID));
+botonEliminar.style.backgroundColor = "#dc3545";
+botonEliminar.style.color = "white";
+botonEliminar.style.border = "none";
+botonEliminar.style.borderRadius = "4px";
+
+botonEliminar.addEventListener("click", () => {
+    eliminarEmpresa(e.empresaID);
+});
 
 celda.appendChild(botonEditar);
 celda.appendChild(botonEliminar);
 
 fila.appendChild(celda);
 tabla.appendChild(fila);
+
+
                     return;
                 }
 
