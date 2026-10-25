@@ -14,11 +14,24 @@
             font-family: Arial, sans-serif;
             margin: 20px;
             color: #111;
-            background: white;
+            background: #fff;
         }
 
         h1 {
             margin-bottom: 20px;
+            color: #2457a7;
+            font-size: 36px;
+        }
+
+        h2 {
+            font-size: 28px;
+            color: #198754;
+        }
+
+        .integrantes {
+            color: #b02a37;
+            font-size: 16px;
+            line-height: 1.7;
         }
 
         .menu {
@@ -30,12 +43,17 @@
             flex-wrap: wrap;
         }
 
+        button {
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+            padding: 9px 13px;
+        }
+
         .menu button {
             padding: 11px 20px;
             border: 1px solid #aaa;
             background: #eee;
-            cursor: pointer;
-            border-radius: 4px;
         }
 
         .menu button.activo {
@@ -51,28 +69,61 @@
             width: 400px;
             max-width: 100%;
             margin-bottom: 20px;
+            border-radius: 5px;
         }
 
         .campo {
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
         label {
             display: block;
-            margin-bottom: 4px;
+            margin-bottom: 5px;
         }
 
         input {
             width: 100%;
-            padding: 8px;
+            padding: 9px;
             border: 1px solid #999;
-            border-radius: 2px;
+            border-radius: 4px;
         }
 
-        .acciones button {
-            padding: 9px 13px;
-            margin-right: 5px;
-            cursor: pointer;
+        input:focus {
+            outline: 2px solid #b7d2ff;
+            border-color: #2457a7;
+        }
+
+        .acciones {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .btn-guardar {
+            background: #198754;
+            color: white;
+        }
+
+        .btn-cancelar {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-editar {
+            background: #2457a7;
+            color: white;
+            margin: 2px;
+        }
+
+        .btn-eliminar {
+            background: #dc3545;
+            color: white;
+            margin: 2px;
+        }
+
+        button:hover {
+            filter: brightness(0.92);
         }
 
         .tabla-contenedor {
@@ -83,7 +134,7 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
+            margin-top: 15px;
             min-width: 650px;
         }
 
@@ -97,13 +148,9 @@
             background: #f2f2f2;
         }
 
-        td button {
-            padding: 8px 12px;
-            cursor: pointer;
-        }
-
         .mensaje {
             margin: 12px 0;
+            font-weight: bold;
         }
 
         .seccion {
@@ -113,42 +160,62 @@
         .seccion.visible {
             display: block;
         }
+
+        @media (max-width: 600px) {
+            body {
+                margin: 12px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            h2 {
+                font-size: 23px;
+            }
+
+            .menu button {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 
 <body>
 
-<h1 style="font-size: 36px; color: blue;">
-    Sistema de Reclutamiento
-</h1>
-    <!-- Navegación entre módulos -->
+    <h1>Sistema de Reclutamiento</h1>
+
     <nav class="menu">
-        <button type="button" id="menuCandidatos"
-                class="activo"
-                onclick="mostrarSeccion('candidatos')">
+        <button
+            type="button"
+            id="menuCandidatos"
+            class="activo"
+            onclick="mostrarSeccion('candidatos')">
             Gestión de Candidatos
         </button>
 
-        <button type="button" id="menuEmpresas"
-                onclick="mostrarSeccion('empresas')">
+        <button
+            type="button"
+            id="menuEmpresas"
+            onclick="mostrarSeccion('empresas')">
             Gestión de Empresas
         </button>
     </nav>
 
-    <!-- ================================== -->
     <!-- MÓDULO DE CANDIDATOS -->
-    <!-- ================================== -->
     <section id="seccionCandidatos" class="seccion visible">
-<h2 style="font-size: 30px; color: green;">
-    Gestión de Candidatos 
-</h2>
-        <h2 style="font-size: 30px; color: red;">
-    Gestión de Candidatos 
-    
-    Aguilar Luis Eduardo Vasquez García 6691-25-20380 
-    Danniel Eliezer Gómez Soto 6691-22-3902 Pedro Cristobal 
-    Gutierrez Perez 6691-24-23363
-</h2>
+
+        <h2>Gestión de Candidatos</h2>
+
+        <h2 style="font-size: 30px; color: black;">
+            Aguilar Luis Eduardo Vasquez García 6691-25-20380<br>
+            Danniel Eliezer Gómez Soto 6691-22-3902<br>
+            Pedro Cristobal Gutierrez Perez 6691-24-23363
+        </h2>
+
+        <h3 style="font-size: 25px; color: blue;">
+    Grupo 6
+</h3>
         
         
         <div class="formulario">
@@ -159,48 +226,71 @@
 
                 <div class="campo">
                     <label for="nombres">Nombres:</label>
-                    <input type="text" id="nombres"
-                           maxlength="100" required>
+                    <input
+                        type="text"
+                        id="nombres"
+                        maxlength="100"
+                        required>
                 </div>
 
                 <div class="campo">
                     <label for="apellidos">Apellidos:</label>
-                    <input type="text" id="apellidos"
-                           maxlength="100" required>
+                    <input
+                        type="text"
+                        id="apellidos"
+                        maxlength="100"
+                        required>
                 </div>
 
                 <div class="campo">
                     <label for="dpi">DPI:</label>
-                    <input type="text" id="dpi"
-                           maxlength="20" required>
+                    <input
+                        type="text"
+                        id="dpi"
+                        maxlength="20"
+                        required>
                 </div>
 
                 <div class="campo">
                     <label for="correoCandidato">Correo:</label>
-                    <input type="email" id="correoCandidato"
-                           maxlength="100" required>
+                    <input
+                        type="email"
+                        id="correoCandidato"
+                        maxlength="100"
+                        required>
                 </div>
 
                 <div class="campo">
                     <label for="telefonoCandidato">Teléfono:</label>
-                    <input type="tel" id="telefonoCandidato"
-                           maxlength="20">
+                    <input
+                        type="tel"
+                        id="telefonoCandidato"
+                        maxlength="20">
                 </div>
 
                 <div class="acciones">
-                    <button type="submit" id="guardarCandidato">
+                    <button
+                        type="submit"
+                        id="guardarCandidato"
+                        class="btn-guardar">
                         Guardar
                     </button>
 
-                    <button type="button"
-                            onclick="cancelarCandidato()">
+                    <button
+                        type="button"
+                        class="btn-cancelar"
+                        onclick="cancelarCandidato()">
                         Cancelar
                     </button>
                 </div>
             </form>
         </div>
 
-        <p id="mensajeCandidatos" class="mensaje" role="status"></p>
+        <p
+            id="mensajeCandidatos"
+            class="mensaje"
+            role="status"
+            aria-live="polite"></p>
 
         <div class="tabla-contenedor">
             <table>
@@ -212,7 +302,7 @@
                         <th>DPI</th>
                         <th>Correo</th>
                         <th>Teléfono</th>
-                        <th>Acción</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
 
@@ -225,14 +315,11 @@
         </div>
     </section>
 
-    <!-- ================================== -->
     <!-- MÓDULO DE EMPRESAS -->
-    <!-- ================================== -->
     <section id="seccionEmpresas" class="seccion">
 
-<h2 style="font-size: 30px; color: green;">
-    Gestión de Empresas
-</h2>
+        <h2>Gestión de Empresas</h2>
+
         <div class="formulario">
             <h3 id="tituloEmpresa">Agregar Empresa</h3>
 
@@ -240,43 +327,64 @@
                 <input type="hidden" id="empresaID">
 
                 <div class="campo">
-                    <label for="nombreEmpresa">Nombre de la Empresa:</label>
-                    <input type="text" id="nombreEmpresa"
-                           maxlength="100" required>
+                    <label for="nombreEmpresa">
+                        Nombre de la Empresa:
+                    </label>
+                    <input
+                        type="text"
+                        id="nombreEmpresa"
+                        maxlength="100"
+                        required>
                 </div>
 
                 <div class="campo">
                     <label for="nit">NIT:</label>
-                    <input type="text" id="nit"
-                           maxlength="20" required>
+                    <input
+                        type="text"
+                        id="nit"
+                        maxlength="20"
+                        required>
                 </div>
 
                 <div class="campo">
                     <label for="telefonoEmpresa">Teléfono:</label>
-                    <input type="tel" id="telefonoEmpresa"
-                           maxlength="20">
+                    <input
+                        type="tel"
+                        id="telefonoEmpresa"
+                        maxlength="20">
                 </div>
 
                 <div class="campo">
                     <label for="correoEmpresa">Correo:</label>
-                    <input type="email" id="correoEmpresa"
-                           maxlength="100">
+                    <input
+                        type="email"
+                        id="correoEmpresa"
+                        maxlength="100">
                 </div>
 
                 <div class="acciones">
-                    <button type="submit" id="guardarEmpresa">
+                    <button
+                        type="submit"
+                        id="guardarEmpresa"
+                        class="btn-guardar">
                         Guardar
                     </button>
 
-                    <button type="button"
-                            onclick="cancelarEmpresa()">
+                    <button
+                        type="button"
+                        class="btn-cancelar"
+                        onclick="cancelarEmpresa()">
                         Cancelar
                     </button>
                 </div>
             </form>
         </div>
 
-        <p id="mensajeEmpresas" class="mensaje" role="status"></p>
+        <p
+            id="mensajeEmpresas"
+            class="mensaje"
+            role="status"
+            aria-live="polite"></p>
 
         <div class="tabla-contenedor">
             <table>
@@ -287,7 +395,7 @@
                         <th>NIT</th>
                         <th>Teléfono</th>
                         <th>Correo</th>
-                        <th>Acción</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
 
@@ -301,96 +409,129 @@
     </section>
 
     <script>
+        // RUTAS DE LA API
         const API_CANDIDATOS = "/candidatos";
         const API_EMPRESAS = "/empresas";
 
-        // ==================================
-        // CAMBIAR ENTRE MÓDULOS
-        // ==================================
+        // =====================================
+        // FUNCIONES GENERALES
+        // =====================================
 
         function mostrarSeccion(seccion) {
+            const esCandidato = seccion === "candidatos";
+
             document.getElementById("seccionCandidatos")
-                .classList.toggle("visible", seccion === "candidatos");
+                .classList.toggle("visible", esCandidato);
 
             document.getElementById("seccionEmpresas")
-                .classList.toggle("visible", seccion === "empresas");
+                .classList.toggle("visible", !esCandidato);
 
             document.getElementById("menuCandidatos")
-                .classList.toggle("activo", seccion === "candidatos");
+                .classList.toggle("activo", esCandidato);
 
             document.getElementById("menuEmpresas")
-                .classList.toggle("activo", seccion === "empresas");
+                .classList.toggle("activo", !esCandidato);
 
-            if (seccion === "candidatos") {
+            if (esCandidato) {
                 cargarCandidatos();
             } else {
                 cargarEmpresas();
             }
         }
 
-        // ==================================
-        // FUNCIONES GENERALES
-        // ==================================
-
         function agregarCelda(fila, valor) {
             const celda = document.createElement("td");
             celda.textContent = valor ?? "";
             fila.appendChild(celda);
+            return celda;
         }
 
         function mostrarMensaje(id, texto, error = false) {
             const elemento = document.getElementById(id);
             elemento.textContent = texto;
-            elemento.style.color = error ? "red" : "green";
+            elemento.style.color = error ? "#dc3545" : "#198754";
         }
 
         async function leerError(respuesta) {
             try {
-                const datos = await respuesta.json();
-                return datos.mensaje || JSON.stringify(datos);
+                const texto = await respuesta.text();
+
+                if (!texto) {
+                    return "Error HTTP " + respuesta.status;
+                }
+
+                try {
+                    const datos = JSON.parse(texto);
+                    return datos.mensaje
+                        || datos.message
+                        || datos.title
+                        || texto;
+                } catch (_) {
+                    return texto;
+                }
             } catch (_) {
                 return "Error HTTP " + respuesta.status;
             }
         }
 
-        // ==================================
+        function agregarBotonAccion(celda, texto, clase, accion) {
+            const boton = document.createElement("button");
+
+            boton.type = "button";
+            boton.textContent = texto;
+            boton.className = clase;
+            boton.addEventListener("click", accion);
+
+            celda.appendChild(boton);
+            return boton;
+        }
+
+        // =====================================
         // CANDIDATOS: LISTAR
-        // ==================================
+        // =====================================
 
         async function cargarCandidatos() {
             const tabla = document.getElementById("tablaCandidatos");
 
+            tabla.replaceChildren();
+
+            const filaCarga = document.createElement("tr");
+            const celdaCarga = agregarCelda(
+                filaCarga,
+                "Cargando candidatos..."
+            );
+            celdaCarga.colSpan = 7;
+            tabla.appendChild(filaCarga);
+
             try {
-                const respuesta = await fetch(API_CANDIDATOS);
+                const respuesta = await fetch(API_CANDIDATOS, {
+                    headers: {
+                        "Accept": "application/json"
+                    }
+                });
 
                 if (!respuesta.ok) {
                     throw new Error(await leerError(respuesta));
                 }
 
                 const candidatos = await respuesta.json();
+
+                if (!Array.isArray(candidatos)) {
+                    throw new Error(
+                        "La respuesta de candidatos no es una lista válida."
+                    );
+                }
+
                 tabla.replaceChildren();
 
                 if (candidatos.length === 0) {
-const celda = document.createElement("td");
-
-// Botón Actualizar
-const botonEditar = document.createElement("button");
-botonEditar.type = "button";
-botonEditar.textContent = "Actualizar";
-botonEditar.addEventListener("click", () => editarCandidato(c));
-
-// Botón Eliminar
-const botonEliminar = document.createElement("button");
-botonEliminar.type = "button";
-botonEliminar.textContent = "Eliminar";
-botonEliminar.style.marginLeft = "5px";
-botonEliminar.addEventListener("click", () => eliminarCandidato(c.candidatoID));
-
-celda.appendChild(botonEditar);
-celda.appendChild(botonEliminar);
-
-fila.appendChild(celda);
-tabla.appendChild(fila);
+                    const fila = document.createElement("tr");
+                    const celda = agregarCelda(
+                        fila,
+                        "No hay candidatos registrados."
+                    );
+                    celda.colSpan = 7;
+                    tabla.appendChild(fila);
                     return;
                 }
 
@@ -404,26 +545,48 @@ tabla.appendChild(fila);
                     agregarCelda(fila, c.correo);
                     agregarCelda(fila, c.telefono);
 
-                    const celda = document.createElement("td");
-                    const boton = document.createElement("button");
+                    const celdaAcciones = document.createElement("td");
 
-                    boton.type = "button";
-                    boton.textContent = "Actualizar";
-                    boton.addEventListener("click", () => editarCandidato(c));
+                    agregarBotonAccion(
+                        celdaAcciones,
+                        "Actualizar",
+                        "btn-editar",
+                        () => editarCandidato(c)
+                    );
 
-                    celda.appendChild(boton);
-                    fila.appendChild(celda);
+                    agregarBotonAccion(
+                        celdaAcciones,
+                        "Eliminar",
+                        "btn-eliminar",
+                        () => eliminarCandidato(c.candidatoID)
+                    );
+
+                    fila.appendChild(celdaAcciones);
                     tabla.appendChild(fila);
                 });
 
             } catch (error) {
-                mostrarMensaje("mensajeCandidatos", error.message, true);
+                tabla.replaceChildren();
+
+                const fila = document.createElement("tr");
+                const celda = agregarCelda(
+                    fila,
+                    "No se pudieron cargar los candidatos."
+                );
+                celda.colSpan = 7;
+                tabla.appendChild(fila);
+
+                mostrarMensaje(
+                    "mensajeCandidatos",
+                    error.message,
+                    true
+                );
             }
         }
 
-        // ==================================
-        // CANDIDATOS: GUARDAR / ACTUALIZAR
-        // ==================================
+        // =====================================
+        // CANDIDATOS: GUARDAR Y ACTUALIZAR
+        // =====================================
 
         document.getElementById("formCandidato")
             .addEventListener("submit", async function(evento) {
@@ -441,7 +604,9 @@ tabla.appendChild(fila);
 
                 try {
                     const respuesta = await fetch(
-                        id ? `${API_CANDIDATOS}/${id}` : API_CANDIDATOS,
+                        id
+                            ? `${API_CANDIDATOS}/${encodeURIComponent(id)}`
+                            : API_CANDIDATOS,
                         {
                             method: id ? "PUT" : "POST",
                             headers: {
@@ -456,19 +621,21 @@ tabla.appendChild(fila);
                         throw new Error(await leerError(respuesta));
                     }
 
+                    cancelarCandidato();
+
                     mostrarMensaje(
                         "mensajeCandidatos",
-                        id ? "Candidato actualizado correctamente."
-                           : "Candidato guardado correctamente."
+                        id
+                            ? "Candidato actualizado correctamente."
+                            : "Candidato guardado correctamente."
                     );
 
-                    cancelarCandidato();
                     await cargarCandidatos();
 
                 } catch (error) {
                     mostrarMensaje(
                         "mensajeCandidatos",
-                        "No se pudo guardar: " + error.message,
+                        "No se pudo guardar el candidato: " + error.message,
                         true
                     );
                 }
@@ -488,121 +655,129 @@ tabla.appendChild(fila);
             document.getElementById("guardarCandidato").textContent =
                 "Actualizar";
 
-            window.scrollTo({ top: 0, behavior: "smooth" });
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
         }
 
         function cancelarCandidato() {
             document.getElementById("formCandidato").reset();
             document.getElementById("candidatoID").value = "";
+
             document.getElementById("tituloCandidato").textContent =
                 "Agregar Candidato";
+
             document.getElementById("guardarCandidato").textContent =
                 "Guardar";
         }
 
-        // ==================================
-        // EMPRESAS: LISTAR
-        // ==================================
-// ==================================
-// CANDIDATOS: ELIMINAR
-// ==================================
+        // =====================================
+        // CANDIDATOS: ELIMINAR
+        // =====================================
 
-async function eliminarCandidato(id) {
-
-    const confirmar = confirm(
-        "¿Estás seguro de que deseas eliminar este candidato?"
-    );
-
-    if (!confirmar) {
-        return;
-    }
-
-    try {
-        const respuesta = await fetch(
-            `${API_CANDIDATOS}/${id}`,
-            {
-                method: "DELETE",
-                headers: {
-                    "Accept": "application/json"
-                }
+        async function eliminarCandidato(id) {
+            if (id == null || id === "") {
+                mostrarMensaje(
+                    "mensajeCandidatos",
+                    "No se encontró el ID del candidato.",
+                    true
+                );
+                return;
             }
-        );
 
-        if (!respuesta.ok) {
-            throw new Error(await leerError(respuesta));
+            const confirmar = confirm(
+                "¿Estás seguro de que deseas eliminar este candidato?"
+            );
+
+            if (!confirmar) {
+                return;
+            }
+
+            try {
+                const respuesta = await fetch(
+                    `${API_CANDIDATOS}/${encodeURIComponent(id)}`,
+                    {
+                        method: "DELETE",
+                        headers: {
+                            "Accept": "application/json"
+                        }
+                    }
+                );
+
+                if (!respuesta.ok) {
+                    throw new Error(await leerError(respuesta));
+                }
+
+                if (
+                    String(document.getElementById("candidatoID").value)
+                    === String(id)
+                ) {
+                    cancelarCandidato();
+                }
+
+                mostrarMensaje(
+                    "mensajeCandidatos",
+                    "Candidato eliminado correctamente."
+                );
+
+                await cargarCandidatos();
+
+            } catch (error) {
+                mostrarMensaje(
+                    "mensajeCandidatos",
+                    "No se pudo eliminar el candidato: " + error.message,
+                    true
+                );
+            }
         }
 
-        // Si se estaba editando el candidato eliminado, limpiar el formulario
-        if (document.getElementById("candidatoID").value === String(id)) {
-            cancelarCandidato();
-        }
-
-        mostrarMensaje(
-            "mensajeCandidatos",
-            "Candidato eliminado correctamente."
-        );
-
-        // Actualizar la tabla
-        await cargarCandidatos();
-
-    } catch (error) {
-        mostrarMensaje(
-            "mensajeCandidatos",
-            "No se pudo eliminar el candidato: " + error.message,
-            true
-        );
-    }
-}
-
-
-
-
+        // =====================================
+        // EMPRESAS: LISTAR
+        // =====================================
 
         async function cargarEmpresas() {
             const tabla = document.getElementById("tablaEmpresas");
 
+            tabla.replaceChildren();
+
+            const filaCarga = document.createElement("tr");
+            const celdaCarga = agregarCelda(
+                filaCarga,
+                "Cargando empresas..."
+            );
+            celdaCarga.colSpan = 6;
+            tabla.appendChild(filaCarga);
+
             try {
-                const respuesta = await fetch(API_EMPRESAS);
+                const respuesta = await fetch(API_EMPRESAS, {
+                    headers: {
+                        "Accept": "application/json"
+                    }
+                });
 
                 if (!respuesta.ok) {
                     throw new Error(await leerError(respuesta));
                 }
 
                 const empresas = await respuesta.json();
+
+                if (!Array.isArray(empresas)) {
+                    throw new Error(
+                        "La respuesta de empresas no es una lista válida."
+                    );
+                }
+
                 tabla.replaceChildren();
 
                 if (empresas.length === 0) {
-
-
-const celda = document.createElement("td");
-
-// Botón Actualizar
-const botonEditar = document.createElement("button");
-botonEditar.type = "button";
-botonEditar.textContent = "Actualizar";
-botonEditar.addEventListener("click", () => editarEmpresa(e));
-
-// Botón Eliminar
-const botonEliminar = document.createElement("button");
-botonEliminar.type = "button";
-botonEliminar.textContent = "Eliminar";
-botonEliminar.style.marginLeft = "5px";
-botonEliminar.style.backgroundColor = "#dc3545";
-botonEliminar.style.color = "white";
-botonEliminar.style.border = "none";
-botonEliminar.style.borderRadius = "4px";
-
-botonEliminar.addEventListener("click", () => {
-    eliminarEmpresa(e.empresaID);
-});
-
-celda.appendChild(botonEditar);
-celda.appendChild(botonEliminar);
-
-fila.appendChild(celda);
-tabla.appendChild(fila);
-
-
+                    const fila = document.createElement("tr");
+                    const celda = agregarCelda(
+                        fila,
+                        "No hay empresas registradas."
+                    );
+                    celda.colSpan = 6;
+                    tabla.appendChild(fila);
                     return;
                 }
 
@@ -615,26 +790,48 @@ tabla.appendChild(fila);
                     agregarCelda(fila, e.telefono);
                     agregarCelda(fila, e.correo);
 
-                    const celda = document.createElement("td");
-                    const boton = document.createElement("button");
+                    const celdaAcciones = document.createElement("td");
 
-                    boton.type = "button";
-                    boton.textContent = "Actualizar";
-                    boton.addEventListener("click", () => editarEmpresa(e));
+                    agregarBotonAccion(
+                        celdaAcciones,
+                        "Actualizar",
+                        "btn-editar",
+                        () => editarEmpresa(e)
+                    );
 
-                    celda.appendChild(boton);
-                    fila.appendChild(celda);
+                    agregarBotonAccion(
+                        celdaAcciones,
+                        "Eliminar",
+                        "btn-eliminar",
+                        () => eliminarEmpresa(e.empresaID)
+                    );
+
+                    fila.appendChild(celdaAcciones);
                     tabla.appendChild(fila);
                 });
 
             } catch (error) {
-                mostrarMensaje("mensajeEmpresas", error.message, true);
+                tabla.replaceChildren();
+
+                const fila = document.createElement("tr");
+                const celda = agregarCelda(
+                    fila,
+                    "No se pudieron cargar las empresas."
+                );
+                celda.colSpan = 6;
+                tabla.appendChild(fila);
+
+                mostrarMensaje(
+                    "mensajeEmpresas",
+                    error.message,
+                    true
+                );
             }
         }
 
-        // ==================================
-        // EMPRESAS: GUARDAR / ACTUALIZAR
-        // ==================================
+        // =====================================
+        // EMPRESAS: GUARDAR Y ACTUALIZAR
+        // =====================================
 
         document.getElementById("formEmpresa")
             .addEventListener("submit", async function(evento) {
@@ -651,7 +848,9 @@ tabla.appendChild(fila);
 
                 try {
                     const respuesta = await fetch(
-                        id ? `${API_EMPRESAS}/${id}` : API_EMPRESAS,
+                        id
+                            ? `${API_EMPRESAS}/${encodeURIComponent(id)}`
+                            : API_EMPRESAS,
                         {
                             method: id ? "PUT" : "POST",
                             headers: {
@@ -666,19 +865,21 @@ tabla.appendChild(fila);
                         throw new Error(await leerError(respuesta));
                     }
 
+                    cancelarEmpresa();
+
                     mostrarMensaje(
                         "mensajeEmpresas",
-                        id ? "Empresa actualizada correctamente."
-                           : "Empresa guardada correctamente."
+                        id
+                            ? "Empresa actualizada correctamente."
+                            : "Empresa guardada correctamente."
                     );
 
-                    cancelarEmpresa();
                     await cargarEmpresas();
 
                 } catch (error) {
                     mostrarMensaje(
                         "mensajeEmpresas",
-                        "No se pudo guardar: " + error.message,
+                        "No se pudo guardar la empresa: " + error.message,
                         true
                     );
                 }
@@ -697,7 +898,10 @@ tabla.appendChild(fila);
             document.getElementById("guardarEmpresa").textContent =
                 "Actualizar";
 
-            window.scrollTo({ top: 0, behavior: "smooth" });
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
         }
 
         function cancelarEmpresa() {
@@ -710,62 +914,71 @@ tabla.appendChild(fila);
             document.getElementById("guardarEmpresa").textContent =
                 "Guardar";
         }
-// ==================================
-// EMPRESAS: ELIMINAR
-// ==================================
 
-async function eliminarEmpresa(id) {
+        // =====================================
+        // EMPRESAS: ELIMINAR
+        // =====================================
 
-    const confirmar = confirm(
-        "¿Estás seguro de que deseas eliminar esta empresa?"
-    );
-
-    if (!confirmar) {
-        return;
-    }
-
-    try {
-        const respuesta = await fetch(
-            `${API_EMPRESAS}/${id}`,
-            {
-                method: "DELETE",
-                headers: {
-                    "Accept": "application/json"
-                }
+        async function eliminarEmpresa(id) {
+            if (id == null || id === "") {
+                mostrarMensaje(
+                    "mensajeEmpresas",
+                    "No se encontró el ID de la empresa.",
+                    true
+                );
+                return;
             }
-        );
 
-        if (!respuesta.ok) {
-            throw new Error(await leerError(respuesta));
+            const confirmar = confirm(
+                "¿Estás seguro de que deseas eliminar esta empresa?"
+            );
+
+            if (!confirmar) {
+                return;
+            }
+
+            try {
+                const respuesta = await fetch(
+                    `${API_EMPRESAS}/${encodeURIComponent(id)}`,
+                    {
+                        method: "DELETE",
+                        headers: {
+                            "Accept": "application/json"
+                        }
+                    }
+                );
+
+                if (!respuesta.ok) {
+                    throw new Error(await leerError(respuesta));
+                }
+
+                if (
+                    String(document.getElementById("empresaID").value)
+                    === String(id)
+                ) {
+                    cancelarEmpresa();
+                }
+
+                mostrarMensaje(
+                    "mensajeEmpresas",
+                    "Empresa eliminada correctamente."
+                );
+
+                await cargarEmpresas();
+
+            } catch (error) {
+                mostrarMensaje(
+                    "mensajeEmpresas",
+                    "No se pudo eliminar la empresa: " + error.message,
+                    true
+                );
+            }
         }
 
-        // Si se estaba editando la empresa eliminada, limpiar el formulario
-        if (document.getElementById("empresaID").value === String(id)) {
-            cancelarEmpresa();
-        }
+        // =====================================
+        // INICIAR SISTEMA
+        // =====================================
 
-        mostrarMensaje(
-            "mensajeEmpresas",
-            "Empresa eliminada correctamente."
-        );
-
-        // Actualizar la tabla
-        await cargarEmpresas();
-
-    } catch (error) {
-        mostrarMensaje(
-            "mensajeEmpresas",
-            "No se pudo eliminar la empresa: " + error.message,
-            true
-        );
-    }
-}
-
-
-
-
-
-        // Cargar el módulo inicial
         cargarCandidatos();
     </script>
 
