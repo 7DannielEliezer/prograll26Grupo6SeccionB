@@ -145,6 +145,10 @@ public class empresasController {
 @Transactional
 public Response eliminarEmpresa(@PathParam("id") Integer id) {
 
+    
+    
+    
+    
     Empresas empresa = em.find(Empresas.class, id);
 
     if (empresa == null) {
