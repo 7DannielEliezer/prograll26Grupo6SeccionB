@@ -26,10 +26,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
-/**
- *
- * @author DELL
- */
+
 @Entity
 @Table(name = "Vacantes", catalog = "ReclutadoraDB", schema = "dbo", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"EmpresaID", "VacanteID"})})
@@ -44,16 +41,23 @@ public class Vacantes implements Serializable {
     @Column(name = "VacanteID", nullable = false)
     private Integer vacanteID;
     @Basic(optional = false)
-    @Column(name = "TituloVacante", nullable = false, length = 100)
-    private String tituloVacante;
-    @Column(name = "Descripcion", length = 2147483647)
-    private String descripcion;
+    
+    
+@Column(name = "TituloVacante", nullable = false, length = 100, columnDefinition = "nvarchar(100)")
+private String tituloVacante;
+    
+@Column(name = "Descripcion", columnDefinition = "nvarchar(max)")
+private String descripcion;
+
+
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "SueldoOfrecido", precision = 12, scale = 2)
     private BigDecimal sueldoOfrecido;
-    @Basic(optional = false)
-    @Column(name = "Estado", nullable = false, length = 20)
-    private String estado;
+    
+@Basic(optional = false)
+@Column(name = "Estado", nullable = false, length = 20, columnDefinition = "nvarchar(20)")
+private String estado;
+
     @Basic(optional = false)
     @Column(name = "FechaPublicacion", nullable = false)
     @Temporal(TemporalType.DATE)

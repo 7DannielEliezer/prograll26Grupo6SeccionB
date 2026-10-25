@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package paquete.bd.reclutadora;
 
 import java.io.Serializable;
@@ -48,17 +44,33 @@ public class Postulaciones implements Serializable {
     @Column(name = "FechaPostulacion", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date fechaPostulacion;
-    @Basic(optional = false)
-    @Column(name = "EstadoCandidato", nullable = false, length = 30)
-    private String estadoCandidato;
+@Basic(optional = false)
+@Column(name = "EstadoCandidato", nullable = false, length = 30, columnDefinition = "nvarchar(30)")
+private String estadoCandidato;
+    @Column(name = "EmpresaID", nullable = false)
+private Integer empresaID;
+    
+    public Integer getEmpresaID() {
+    return empresaID;
+}
+
+public void setEmpresaID(Integer empresaID) {
+    this.empresaID = empresaID;
+}
+    
+    
     @JoinColumn(name = "CandidatoID", referencedColumnName = "CandidatoID", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Candidatos candidatoID;
-    @JoinColumns({
-        @JoinColumn(name = "EmpresaID", referencedColumnName = "EmpresaID", nullable = false),
-        @JoinColumn(name = "VacanteID", referencedColumnName = "VacanteID", nullable = false)})
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Vacantes vacantes;
+    
+@JoinColumn(
+    name = "VacanteID",
+    referencedColumnName = "VacanteID",
+    nullable = false
+)
+@ManyToOne(optional = false, fetch = FetchType.LAZY)
+private Vacantes vacantes;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "postulaciones", fetch = FetchType.LAZY)
     private List<Contrataciones> contratacionesList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "postulacionID", fetch = FetchType.LAZY)

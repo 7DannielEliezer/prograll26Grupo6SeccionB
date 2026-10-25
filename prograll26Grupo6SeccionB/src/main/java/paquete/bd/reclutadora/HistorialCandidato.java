@@ -37,14 +37,29 @@ public class HistorialCandidato implements Serializable {
     @Basic(optional = false)
     @Column(name = "HistorialID", nullable = false)
     private Integer historialID;
-    @Basic(optional = false)
-    @Column(name = "TipoHistorial", nullable = false, length = 20)
-    private String tipoHistorial;
-    @Basic(optional = false)
-    @Column(name = "TituloInstitucion", nullable = false, length = 150)
-    private String tituloInstitucion;
-    @Column(name = "Descripcion", length = 2147483647)
-    private String descripcion;
+@Basic(optional = false)
+@Column(
+    name = "TipoHistorial",
+    nullable = false,
+    length = 20,
+    columnDefinition = "nvarchar(20)"
+)
+
+private String tipoHistorial;
+@Basic(optional = false)
+@Column(
+    name = "TituloInstitucion",
+    nullable = false,
+    length = 150,
+    columnDefinition = "nvarchar(150)"
+)
+private String tituloInstitucion;
+
+@Column(
+    name = "Descripcion",
+    columnDefinition = "nvarchar(max)"
+)
+private String descripcion;
     @Column(name = "FechaInicio")
     @Temporal(TemporalType.DATE)
     private Date fechaInicio;

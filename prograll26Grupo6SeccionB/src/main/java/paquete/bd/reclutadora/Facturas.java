@@ -42,9 +42,14 @@ public class Facturas implements Serializable {
     @Basic(optional = false)
     @Column(name = "FacturaID", nullable = false)
     private Integer facturaID;
-    @Basic(optional = false)
-    @Column(name = "NumeroFactura", nullable = false, length = 50)
-    private String numeroFactura;
+@Basic(optional = false)
+@Column(
+    name = "NumeroFactura",
+    nullable = false,
+    length = 50,
+    columnDefinition = "nvarchar(50)"
+)
+private String numeroFactura;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Basic(optional = false)
     @Column(name = "MontoTotal", nullable = false, precision = 12, scale = 2)
@@ -53,9 +58,14 @@ public class Facturas implements Serializable {
     @Column(name = "FechaEmision", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaEmision;
-    @Basic(optional = false)
-    @Column(name = "EstadoFactura", nullable = false, length = 20)
-    private String estadoFactura;
+@Basic(optional = false)
+@Column(
+    name = "EstadoFactura",
+    nullable = false,
+    length = 20,
+    columnDefinition = "nvarchar(20)"
+)
+private String estadoFactura;
     @JoinColumns({
         @JoinColumn(name = "EmpresaID", referencedColumnName = "EmpresaID", nullable = false),
         @JoinColumn(name = "ContratacionID", referencedColumnName = "ContratacionID", nullable = false)})

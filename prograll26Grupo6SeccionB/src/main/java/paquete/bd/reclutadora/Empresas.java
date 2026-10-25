@@ -37,16 +37,27 @@ public class Empresas implements Serializable {
     @Basic(optional = false)
     @Column(name = "EmpresaID", nullable = false)
     private Integer empresaID;
-    @Basic(optional = false)
-    @Column(name = "NombreEmpresa", nullable = false, length = 100)
-    private String nombreEmpresa;
-    @Basic(optional = false)
-    @Column(name = "NIT", nullable = false, length = 20)
-    private String nit;
-    @Column(name = "Telefono", length = 20)
-    private String telefono;
-    @Column(name = "Correo", length = 100)
-    private String correo;
+    
+    
+ @Basic(optional = false)
+@Column(name = "NombreEmpresa", nullable = false, length = 100,
+        columnDefinition = "nvarchar(100)")
+private String nombreEmpresa;
+
+@Basic(optional = false)
+@Column(name = "NIT", nullable = false, length = 20,
+        columnDefinition = "nvarchar(20)")
+private String nit;
+
+@Column(name = "Telefono", length = 20,
+        columnDefinition = "nvarchar(20)")
+private String telefono;
+
+@Column(name = "Correo", length = 100,
+        columnDefinition = "nvarchar(100)")
+private String correo;
+
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "empresaID", fetch = FetchType.LAZY)
     private List<Vacantes> vacantesList;
 

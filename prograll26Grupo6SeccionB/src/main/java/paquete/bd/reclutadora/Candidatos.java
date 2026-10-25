@@ -37,20 +37,34 @@ public class Candidatos implements Serializable {
     @Basic(optional = false)
     @Column(name = "CandidatoID", nullable = false)
     private Integer candidatoID;
-    @Basic(optional = false)
-    @Column(name = "Nombres", nullable = false, length = 100)
-    private String nombres;
-    @Basic(optional = false)
-    @Column(name = "Apellidos", nullable = false, length = 100)
-    private String apellidos;
-    @Basic(optional = false)
-    @Column(name = "DPI", nullable = false, length = 20)
-    private String dpi;
-    @Basic(optional = false)
-    @Column(name = "Correo", nullable = false, length = 100)
-    private String correo;
-    @Column(name = "Telefono", length = 20)
-    private String telefono;
+    
+    
+  @Basic(optional = false)
+@Column(name = "Nombres", nullable = false, length = 100,
+        columnDefinition = "nvarchar(100)")
+private String nombres;
+
+@Basic(optional = false)
+@Column(name = "Apellidos", nullable = false, length = 100,
+        columnDefinition = "nvarchar(100)")
+private String apellidos;
+
+@Basic(optional = false)
+@Column(name = "DPI", nullable = false, length = 20,
+        columnDefinition = "nvarchar(20)")
+private String dpi;
+
+@Basic(optional = false)
+@Column(name = "Correo", nullable = false, length = 100,
+        columnDefinition = "nvarchar(100)")
+private String correo;
+
+@Column(name = "Telefono", length = 20,
+        columnDefinition = "nvarchar(20)")
+private String telefono;
+    
+    
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "candidatoID", fetch = FetchType.LAZY)
     private List<HistorialCandidato> historialCandidatoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "candidatoID", fetch = FetchType.LAZY)

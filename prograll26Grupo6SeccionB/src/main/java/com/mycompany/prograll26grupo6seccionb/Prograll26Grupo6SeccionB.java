@@ -33,7 +33,31 @@ import java.util.Date;
 public class Prograll26Grupo6SeccionB {
 
     public static void main(String[] args) {
+        
+            int opcion = 0;
+               Scanner scanner = new Scanner(System.in);
+                    opcion = scanner.nextInt();
+            scanner.nextLine();
+                    
+            scanner.nextLine();
+                   while (opcion != 1) {
+switch (opcion) {
 
+
+
+                       
+                case 1:
+                break;
+                                default:
+                    System.out.println("Opción no válida.");
+                    break;
+
+
+                    }
+
+                   }
+                   
+/*
           EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.mycompany_prograll26Grupo6SeccionB_jar_1.0-SNAPSHOTPU");
            EntityManager em = emf.createEntityManager();
         Scanner scanner = new Scanner(System.in);
@@ -41,13 +65,6 @@ public class Prograll26Grupo6SeccionB {
         int opcion = 0;
 
         while (opcion != 7) {
-                     System.out.println("Danniel Eliezer Gómez Soto 6691-22-3902");
-                     System.out.println("Luis eduardo Vasquez Garcia 6691-25-20380");
-            
-          
-            
-          
-
             System.out.println("\n=== Menú de Reclutadora ===");
             System.out.println("1. Gestionar Empresas");
             System.out.println("2. Gestionar Candidatos");
@@ -1756,7 +1773,9 @@ public static void borrarContrataciones(EntityManager em, Scanner scanner) {
         if (em.getTransaction().isActive()) {
             em.getTransaction().rollback();
         }
-    }
+        }
+        */
+    
 }
 
 

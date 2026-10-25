@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package paquete.bd.reclutadora;
 
 import java.io.Serializable;
@@ -56,14 +53,45 @@ public class Contrataciones implements Serializable {
     @Basic(optional = false)
     @Column(name = "CostoServicio", nullable = false, precision = 12, scale = 2)
     private BigDecimal costoServicio;
+@Column(name = "EmpresaID", nullable = false)
+private Integer empresaID;
+    
+    
+    public Integer getEmpresaID() {
+    return empresaID;
+}
+
+public void setEmpresaID(Integer empresaID) {
+    this.empresaID = empresaID;
+}
+    
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "contrataciones", fetch = FetchType.LAZY)
     private List<Facturas> facturasList;
-    @JoinColumns({
-        @JoinColumn(name = "EmpresaID", referencedColumnName = "EmpresaID", nullable = false),
-        @JoinColumn(name = "PostulacionID", referencedColumnName = "PostulacionID", nullable = false)})
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Postulaciones postulaciones;
 
+    
+@JoinColumns({
+    @JoinColumn(
+        name = "EmpresaID",
+        referencedColumnName = "EmpresaID",
+        nullable = false,
+        insertable = false,
+        updatable = false
+    ),
+    @JoinColumn(
+        name = "PostulacionID",
+        referencedColumnName = "PostulacionID",
+        nullable = false,
+        insertable = false,
+        updatable = false
+    )
+})
+@ManyToOne(optional = false, fetch = FetchType.LAZY)
+private Postulaciones postulaciones;
+
+
+    
+    
     public Contrataciones() {
     }
 

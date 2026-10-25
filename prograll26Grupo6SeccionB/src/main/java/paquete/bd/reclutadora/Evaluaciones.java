@@ -37,17 +37,23 @@ public class Evaluaciones implements Serializable {
     @Basic(optional = false)
     @Column(name = "EvaluacionID", nullable = false)
     private Integer evaluacionID;
-    @Basic(optional = false)
-    @Column(name = "TipoEvaluacion", nullable = false, length = 50)
-    private String tipoEvaluacion;
+    
+@Basic(optional = false)
+@Column(name = "TipoEvaluacion", nullable = false, length = 50,
+        columnDefinition = "nvarchar(50)")
+private String tipoEvaluacion;
+
     @Basic(optional = false)
     @Column(name = "FechaEvaluacion", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaEvaluacion;
-    @Column(name = "Resultado", length = 50)
-    private String resultado;
-    @Column(name = "Comentarios", length = 2147483647)
-    private String comentarios;
+@Column(name = "Resultado", length = 50,
+        columnDefinition = "nvarchar(50)")
+private String resultado;
+    
+@Column(name = "Comentarios", columnDefinition = "nvarchar(max)")
+private String comentarios;
+
     @JoinColumn(name = "PostulacionID", referencedColumnName = "PostulacionID", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Postulaciones postulacionID;

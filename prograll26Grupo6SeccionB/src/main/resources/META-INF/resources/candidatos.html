@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Reclutamiento</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            color: #111;
+            background: white;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        .menu {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 25px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .menu button {
+            padding: 11px 20px;
+            border: 1px solid #aaa;
+            background: #eee;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .menu button.activo {
+            background: #2457a7;
+            color: white;
+            border-color: #2457a7;
+        }
+
+        .formulario {
+            background: #f9f9f9;
+            border: 1px solid #d6d6d6;
+            padding: 15px;
+            width: 400px;
+            max-width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .campo {
+            margin-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #999;
+            border-radius: 2px;
+        }
+
+        .acciones button {
+            padding: 9px 13px;
+            margin-right: 5px;
+            cursor: pointer;
+        }
+
+        .tabla-contenedor {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            min-width: 650px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px 8px;
+            text-align: left;
+        }
+
+        th {
+            background: #f2f2f2;
+        }
+
+        td button {
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+
+        .mensaje {
+            margin: 12px 0;
+        }
+
+        .seccion {
+            display: none;
+        }
+
+        .seccion.visible {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Sistema de Reclutamiento</h1>
+
+    <!-- Navegación entre módulos -->
+    <nav class="menu">
+        <button type="button" id="menuCandidatos"
+                class="activo"
+                onclick="mostrarSeccion('candidatos')">
+            Gestión de Candidatos
+        </button>
+
+        <button type="button" id="menuEmpresas"
+                onclick="mostrarSeccion('empresas')">
+            Gestión de Empresas
+        </button>
+    </nav>
+
+    <!-- ================================== -->
+    <!-- MÓDULO DE CANDIDATOS -->
+    <!-- ================================== -->
+    <section id="seccionCandidatos" class="seccion visible">
+
+        <h2>Gestión de Candidatos</h2>
+
+        <div class="formulario">
+            <h3 id="tituloCandidato">Agregar Candidato</h3>
+
+            <form id="formCandidato">
+                <input type="hidden" id="candidatoID">
+
+                <div class="campo">
+                    <label for="nombres">Nombres:</label>
+                    <input type="text" id="nombres"
+                           maxlength="100" required>
+                </div>
+
+                <div class="campo">
+                    <label for="apellidos">Apellidos:</label>
+                    <input type="text" id="apellidos"
+                           maxlength="100" required>
+                </div>
+
+                <div class="campo">
+                    <label for="dpi">DPI:</label>
+                    <input type="text" id="dpi"
+                           maxlength="20" required>
+                </div>
+
+                <div class="campo">
+                    <label for="correoCandidato">Correo:</label>
+                    <input type="email" id="correoCandidato"
+                           maxlength="100" required>
+                </div>
+
+                <div class="campo">
+                    <label for="telefonoCandidato">Teléfono:</label>
+                    <input type="tel" id="telefonoCandidato"
+                           maxlength="20">
+                </div>
+
+                <div class="acciones">
+                    <button type="submit" id="guardarCandidato">
+                        Guardar
+                    </button>
+
+                    <button type="button"
+                            onclick="cancelarCandidato()">
+                        Cancelar
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <p id="mensajeCandidatos" class="mensaje" role="status"></p>
+
+        <div class="tabla-contenedor">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombres</th>
+                        <th>Apellidos</th>
+                        <th>DPI</th>
+                        <th>Correo</th>
+                        <th>Teléfono</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+
+                <tbody id="tablaCandidatos">
+                    <tr>
+                        <td colspan="7">Cargando candidatos...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- ================================== -->
+    <!-- MÓDULO DE EMPRESAS -->
+    <!-- ================================== -->
+    <section id="seccionEmpresas" class="seccion">
+
+        <h2>Gestión de Empresas</h2>
+
+        <div class="formulario">
+            <h3 id="tituloEmpresa">Agregar Empresa</h3>
+
+            <form id="formEmpresa">
+                <input type="hidden" id="empresaID">
+
+                <div class="campo">
+                    <label for="nombreEmpresa">Nombre de la Empresa:</label>
+                    <input type="text" id="nombreEmpresa"
+                           maxlength="100" required>
+                </div>
+
+                <div class="campo">
+                    <label for="nit">NIT:</label>
+                    <input type="text" id="nit"
+                           maxlength="20" required>
+                </div>
+
+                <div class="campo">
+                    <label for="telefonoEmpresa">Teléfono:</label>
+                    <input type="tel" id="telefonoEmpresa"
+                           maxlength="20">
+                </div>
+
+                <div class="campo">
+                    <label for="correoEmpresa">Correo:</label>
+                    <input type="email" id="correoEmpresa"
+                           maxlength="100">
+                </div>
+
+                <div class="acciones">
+                    <button type="submit" id="guardarEmpresa">
+                        Guardar
+                    </button>
+
+                    <button type="button"
+                            onclick="cancelarEmpresa()">
+                        Cancelar
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <p id="mensajeEmpresas" class="mensaje" role="status"></p>
+
+        <div class="tabla-contenedor">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>NIT</th>
+                        <th>Teléfono</th>
+                        <th>Correo</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+
+                <tbody id="tablaEmpresas">
+                    <tr>
+                        <td colspan="6">Cargando empresas...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <script>
+        const API_CANDIDATOS = "/candidatos";
+        const API_EMPRESAS = "/empresas";
+
+        // ==================================
+        // CAMBIAR ENTRE MÓDULOS
+        // ==================================
+
+        function mostrarSeccion(seccion) {
+            document.getElementById("seccionCandidatos")
+                .classList.toggle("visible", seccion === "candidatos");
+
+            document.getElementById("seccionEmpresas")
+                .classList.toggle("visible", seccion === "empresas");
+
+            document.getElementById("menuCandidatos")
+                .classList.toggle("activo", seccion === "candidatos");
+
+            document.getElementById("menuEmpresas")
+                .classList.toggle("activo", seccion === "empresas");
+
+            if (seccion === "candidatos") {
+                cargarCandidatos();
+            } else {
+                cargarEmpresas();
+            }
+        }
+
+        // ==================================
+        // FUNCIONES GENERALES
+        // ==================================
+
+        function agregarCelda(fila, valor) {
+            const celda = document.createElement("td");
+            celda.textContent = valor ?? "";
+            fila.appendChild(celda);
+        }
+
+        function mostrarMensaje(id, texto, error = false) {
+            const elemento = document.getElementById(id);
+            elemento.textContent = texto;
+            elemento.style.color = error ? "red" : "green";
+        }
+
+        async function leerError(respuesta) {
+            try {
+                const datos = await respuesta.json();
+                return datos.mensaje || JSON.stringify(datos);
+            } catch (_) {
+                return "Error HTTP " + respuesta.status;
+            }
+        }
+
+        // ==================================
+        // CANDIDATOS: LISTAR
+        // ==================================
+
+        async function cargarCandidatos() {
+            const tabla = document.getElementById("tablaCandidatos");
+
+            try {
+                const respuesta = await fetch(API_CANDIDATOS);
+
+                if (!respuesta.ok) {
+                    throw new Error(await leerError(respuesta));
+                }
+
+                const candidatos = await respuesta.json();
+                tabla.replaceChildren();
+
+                if (candidatos.length === 0) {
+                    const fila = document.createElement("tr");
+                    const celda = document.createElement("td");
+                    celda.colSpan = 7;
+                    celda.textContent = "No hay candidatos registrados.";
+                    fila.appendChild(celda);
+                    tabla.appendChild(fila);
+                    return;
+                }
+
+                candidatos.forEach(c => {
+                    const fila = document.createElement("tr");
+
+                    agregarCelda(fila, c.candidatoID);
+                    agregarCelda(fila, c.nombres);
+                    agregarCelda(fila, c.apellidos);
+                    agregarCelda(fila, c.dpi);
+                    agregarCelda(fila, c.correo);
+                    agregarCelda(fila, c.telefono);
+
+                    const celda = document.createElement("td");
+                    const boton = document.createElement("button");
+
+                    boton.type = "button";
+                    boton.textContent = "Actualizar";
+                    boton.addEventListener("click", () => editarCandidato(c));
+
+                    celda.appendChild(boton);
+                    fila.appendChild(celda);
+                    tabla.appendChild(fila);
+                });
+
+            } catch (error) {
+                mostrarMensaje("mensajeCandidatos", error.message, true);
+            }
+        }
+
+        // ==================================
+        // CANDIDATOS: GUARDAR / ACTUALIZAR
+        // ==================================
+
+        document.getElementById("formCandidato")
+            .addEventListener("submit", async function(evento) {
+                evento.preventDefault();
+
+                const id = document.getElementById("candidatoID").value;
+
+                const candidato = {
+                    nombres: document.getElementById("nombres").value.trim(),
+                    apellidos: document.getElementById("apellidos").value.trim(),
+                    dpi: document.getElementById("dpi").value.trim(),
+                    correo: document.getElementById("correoCandidato").value.trim(),
+                    telefono: document.getElementById("telefonoCandidato").value.trim()
+                };
+
+                try {
+                    const respuesta = await fetch(
+                        id ? `${API_CANDIDATOS}/${id}` : API_CANDIDATOS,
+                        {
+                            method: id ? "PUT" : "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                "Accept": "application/json"
+                            },
+                            body: JSON.stringify(candidato)
+                        }
+                    );
+
+                    if (!respuesta.ok) {
+                        throw new Error(await leerError(respuesta));
+                    }
+
+                    mostrarMensaje(
+                        "mensajeCandidatos",
+                        id ? "Candidato actualizado correctamente."
+                           : "Candidato guardado correctamente."
+                    );
+
+                    cancelarCandidato();
+                    await cargarCandidatos();
+
+                } catch (error) {
+                    mostrarMensaje(
+                        "mensajeCandidatos",
+                        "No se pudo guardar: " + error.message,
+                        true
+                    );
+                }
+            });
+
+        function editarCandidato(c) {
+            document.getElementById("candidatoID").value = c.candidatoID;
+            document.getElementById("nombres").value = c.nombres || "";
+            document.getElementById("apellidos").value = c.apellidos || "";
+            document.getElementById("dpi").value = c.dpi || "";
+            document.getElementById("correoCandidato").value = c.correo || "";
+            document.getElementById("telefonoCandidato").value = c.telefono || "";
+
+            document.getElementById("tituloCandidato").textContent =
+                "Actualizar Candidato";
+
+            document.getElementById("guardarCandidato").textContent =
+                "Actualizar";
+
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        function cancelarCandidato() {
+            document.getElementById("formCandidato").reset();
+            document.getElementById("candidatoID").value = "";
+            document.getElementById("tituloCandidato").textContent =
+                "Agregar Candidato";
+            document.getElementById("guardarCandidato").textContent =
+                "Guardar";
+        }
+
+        // ==================================
+        // EMPRESAS: LISTAR
+        // ==================================
+
+        async function cargarEmpresas() {
+            const tabla = document.getElementById("tablaEmpresas");
+
+            try {
+                const respuesta = await fetch(API_EMPRESAS);
+
+                if (!respuesta.ok) {
+                    throw new Error(await leerError(respuesta));
+                }
+
+                const empresas = await respuesta.json();
+                tabla.replaceChildren();
+
+                if (empresas.length === 0) {
+                    const fila = document.createElement("tr");
+                    const celda = document.createElement("td");
+                    celda.colSpan = 6;
+                    celda.textContent = "No hay empresas registradas.";
+                    fila.appendChild(celda);
+                    tabla.appendChild(fila);
+                    return;
+                }
+
+                empresas.forEach(e => {
+                    const fila = document.createElement("tr");
+
+                    agregarCelda(fila, e.empresaID);
+                    agregarCelda(fila, e.nombreEmpresa);
+                    agregarCelda(fila, e.nit);
+                    agregarCelda(fila, e.telefono);
+                    agregarCelda(fila, e.correo);
+
+                    const celda = document.createElement("td");
+                    const boton = document.createElement("button");
+
+                    boton.type = "button";
+                    boton.textContent = "Actualizar";
+                    boton.addEventListener("click", () => editarEmpresa(e));
+
+                    celda.appendChild(boton);
+                    fila.appendChild(celda);
+                    tabla.appendChild(fila);
+                });
+
+            } catch (error) {
+                mostrarMensaje("mensajeEmpresas", error.message, true);
+            }
+        }
+
+        // ==================================
+        // EMPRESAS: GUARDAR / ACTUALIZAR
+        // ==================================
+
+        document.getElementById("formEmpresa")
+            .addEventListener("submit", async function(evento) {
+                evento.preventDefault();
+
+                const id = document.getElementById("empresaID").value;
+
+                const empresa = {
+                    nombreEmpresa: document.getElementById("nombreEmpresa").value.trim(),
+                    nit: document.getElementById("nit").value.trim(),
+                    telefono: document.getElementById("telefonoEmpresa").value.trim(),
+                    correo: document.getElementById("correoEmpresa").value.trim()
+                };
+
+                try {
+                    const respuesta = await fetch(
+                        id ? `${API_EMPRESAS}/${id}` : API_EMPRESAS,
+                        {
+                            method: id ? "PUT" : "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                "Accept": "application/json"
+                            },
+                            body: JSON.stringify(empresa)
+                        }
+                    );
+
+                    if (!respuesta.ok) {
+                        throw new Error(await leerError(respuesta));
+                    }
+
+                    mostrarMensaje(
+                        "mensajeEmpresas",
+                        id ? "Empresa actualizada correctamente."
+                           : "Empresa guardada correctamente."
+                    );
+
+                    cancelarEmpresa();
+                    await cargarEmpresas();
+
+                } catch (error) {
+                    mostrarMensaje(
+                        "mensajeEmpresas",
+                        "No se pudo guardar: " + error.message,
+                        true
+                    );
+                }
+            });
+
+        function editarEmpresa(e) {
+            document.getElementById("empresaID").value = e.empresaID;
+            document.getElementById("nombreEmpresa").value = e.nombreEmpresa || "";
+            document.getElementById("nit").value = e.nit || "";
+            document.getElementById("telefonoEmpresa").value = e.telefono || "";
+            document.getElementById("correoEmpresa").value = e.correo || "";
+
+            document.getElementById("tituloEmpresa").textContent =
+                "Actualizar Empresa";
+
+            document.getElementById("guardarEmpresa").textContent =
+                "Actualizar";
+
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        function cancelarEmpresa() {
+            document.getElementById("formEmpresa").reset();
+            document.getElementById("empresaID").value = "";
+
+            document.getElementById("tituloEmpresa").textContent =
+                "Agregar Empresa";
+
+            document.getElementById("guardarEmpresa").textContent =
+                "Guardar";
+        }
+
+        // Cargar el módulo inicial
+        cargarCandidatos();
+    </script>
+
+</body>
+</html>
